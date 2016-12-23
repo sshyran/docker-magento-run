@@ -1,0 +1,12 @@
+version: '2'
+services:
+    server:
+      image: a983868b0400
+      ports:
+        - "80:80"
+        - "443:443"
+        - "22:22"
+      volumes:
+        - ./docker-runtime/logs/nginx:/var/log/nginx
+        - ./docker-runtime/data/mysql:/var/lib/mysql
+        - .:/var/www/html/web

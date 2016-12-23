@@ -1,0 +1,32 @@
+version: '2'
+services:
+    nginx:
+      image: nginx:latest
+      ports:
+        - "80:80"
+        - "443:443"
+      links:
+        - "php"
+      volumes:
+        - ./logs/nginx:/var/log/nginx
+        - ./config/ssl/cert.pem:/etc/nginx/ssl/cert.pem
+        - ./config/ssl/cert.key:/etc/nginx/ssl/cert.key
+        - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+        - ./config/nginx/sites-enabled/default.conf:/etc/nginx/conf.d/default.conf
+        - ./config/nginx/includes:/etc/nginx/includes
+      volumes_from:
+        - php
+    php:
+      image: hws47a/dockerized-magento-php
+      links:
+        - "mysql:mysql"
+      volumes:
+         - ../../..:/var/www/html/web
+    mysql:
+      image: mysql:5.6
+      ports:
+        - "3306:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: "pw"
+      volumes:
+        - ./data/mysql:/var/lib/mysql
