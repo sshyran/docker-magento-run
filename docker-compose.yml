@@ -1,7 +1,7 @@
 version: '2'
 services:
     server:
-      image: a983868b0400
+      image: hws47a/magento-run
       ports:
         - "80:80"
         - "443:443"
